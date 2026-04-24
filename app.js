@@ -295,5 +295,6 @@ class VoterManager {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    window.civicApp = new VoterManager();
+    const manager = new VoterManager();
+    window.civicApp = manager;
 });

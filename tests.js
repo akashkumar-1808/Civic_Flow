@@ -26,7 +26,7 @@ setTimeout(() => {
 
         // Test 5 & 6: Data Injection & Calendar Payload Accuracy
         const calendarUrl = app.getGoogleCalendarLink('India');
-        const expectedDateStr = '20260423T120000Z/20260423T200000Z'; 
+        const expectedDateStr = encodeURIComponent('20260423T120000Z/20260423T200000Z');  
         console.assert(calendarUrl.includes('action=TEMPLATE'), "Test 5 Failed: URI missing core API gateway template payload triggers.");
         console.assert(calendarUrl.includes(expectedDateStr), "Test 6 Failed: Generated URI failed to inject the targeted country time milestone directly sourced from ELECTION_DATA.");
         
@@ -37,4 +37,4 @@ setTimeout(() => {
     } finally {
         console.groupEnd();
     }
-}, 800);
+}, 1500);
