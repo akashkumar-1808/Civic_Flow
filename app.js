@@ -44,9 +44,15 @@ class VoterManager {
             'reminder':    { id: 'state-reminder', progress: '100%' }
         };
         
-        // Restore persistent state or initialize defaults
-        this.currentState = localStorage.getItem('civicFlow_state') || 'selection';
-        this.selectedCountry = localStorage.getItem('civicFlow_country') || '';
+        // Restore persistent state safely
+        try {
+            this.currentState = localStorage.getItem('civicFlow_state') || 'selection';
+            this.selectedCountry = localStorage.getItem('civicFlow_country') || '';
+        } catch (storageErr) {
+            console.warn("CivicFlow Warning: LocalStorage access blocked or restricted. Running in ephemeral mode.");
+            this.currentState = 'selection';
+            this.selectedCountry = '';
+        }
         
         // Cache DOM elements
         this.liveRegion = document.getElementById('a11y-live-region');
@@ -85,7 +91,11 @@ class VoterManager {
         // Handle dropdown selection
         this.countrySelect.addEventListener('change', (e) => {
             this.selectedCountry = e.target.value;
-            localStorage.setItem('civicFlow_country', this.selectedCountry);
+            try {
+                localStorage.setItem('civicFlow_country', this.selectedCountry);
+            } catch (err) {
+                console.warn("CivicFlow Warning: Failed to persist country selection dynamically.", err);
+            }
             this.populateCountryData(this.selectedCountry);
             this.continueEligibilityBtn.disabled = false;
             this.announce(`Country set to ${this.selectedCountry}`);
@@ -121,9 +131,18 @@ class VoterManager {
         // Google Calendar API Simulation
         if (this.remindMeBtn) {
             this.remindMeBtn.addEventListener('click', () => {
-                if (this.selectedCountry) {
-                    const link = this.getGoogleCalendarLink(this.selectedCountry);
-                    window.open(link, '_blank', 'noopener,noreferrer');
+                try {
+                    if (this.selectedCountry) {
+                        const link = this.getGoogleCalendarLink(this.selectedCountry);
+                        if (link && link !== '#') {
+                            window.open(link, '_blank', 'noopener,noreferrer');
+                        } else {
+                            throw new Error("Invalid Calendar Payload structure generated.");
+                        }
+                    }
+                } catch (linkError) {
+                    console.error("CivicFlow Critical: Failed to generate Calendar Hook.", linkError);
+                    alert("We're sorry, automated calendar generation is currently blocked or unavailable. Please verify manually!");
                 }
             });
         }
@@ -144,8 +163,13 @@ class VoterManager {
      * Resets LocalStorage and returns to the initial state safely.
      */
     resetFlow() {
-        localStorage.removeItem('civicFlow_state');
-        localStorage.removeItem('civicFlow_country');
+        try {
+            localStorage.removeItem('civicFlow_state');
+            localStorage.removeItem('civicFlow_country');
+        } catch (err) {
+            console.warn("CivicFlow Warning: Failed to clear session cache during manual reset.");
+        }
+        
         this.selectedCountry = '';
         this.countrySelect.value = '';
         this.continueEligibilityBtn.disabled = true;
@@ -185,7 +209,12 @@ class VoterManager {
         if (this.currentState === newStateKey) return;
         this.currentState = newStateKey;
         
-        localStorage.setItem('civicFlow_state', this.currentState);
+        try {
+            localStorage.setItem('civicFlow_state', this.currentState);
+        } catch (err) {
+            console.warn("CivicFlow Warning: Transitory state persistence failed to sync storage.");
+        }
+        
         this.renderState(this.currentState, false);
         
         // Announce new state
@@ -248,15 +277,20 @@ class VoterManager {
      * @returns {string} url
      */
     getGoogleCalendarLink(country) {
-        const data = ELECTION_DATA[country];
-        if (!data) return '#';
+        try {
+            const data = ELECTION_DATA[country];
+            if (!data) throw new Error('Schema resolution lookup failed for region key: ' + country);
 
-        const action = 'TEMPLATE';
-        const text = encodeURIComponent(`Election Day in ${data.name}`);
-        const dates = data.dateStr;
-        const details = encodeURIComponent(`Remember to vote in the ${data.desc}! Registration info: ${data.registration}`);
-        
-        return `https://calendar.google.com/calendar/render?action=${action}&text=${text}&dates=${dates}&details=${details}`;
+            const action = 'TEMPLATE';
+            const text = encodeURIComponent(`Election Day in ${data.name}`);
+            const dates = encodeURIComponent(data.dateStr); 
+            const details = encodeURIComponent(`Remember to vote in the ${data.desc}! Registration info: ${data.registration}`);
+            
+            return `https://calendar.google.com/calendar/render?action=${action}&text=${text}&dates=${dates}&details=${details}`;
+        } catch (generationError) {
+            console.error("CivicFlow API Formulation Error:", generationError);
+            return '#';
+        }
     }
 }
 
