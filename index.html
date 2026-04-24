@@ -46,7 +46,10 @@
             </div>
             <nav aria-label="Main Navigation">
                 <ul class="flex gap-4 items-center">
-                    <li id="google_translate_element" class="scale-75 origin-right"></li>
+                    <li class="flex items-center gap-2 scale-75 origin-right translate-widget-container">
+                        <span aria-hidden="true" class="text-xl">🌐</span>
+                        <div id="google_translate_element"></div>
+                    </li>
                     <li>
                         <button id="reset-flow-btn" class="text-sm text-gray-400 hover:text-white transition-colors border border-white/20 px-3 py-1 rounded-md bg-white/5 hover:bg-white/10" aria-label="Reset Voter Flow">Reset</button>
                     </li>
