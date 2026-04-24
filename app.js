@@ -59,6 +59,7 @@ class VoterManager {
         this.finishBtn = document.getElementById('finish-btn');
         this.backBtns = document.querySelectorAll('.state-back-btn');
         this.remindMeBtn = document.getElementById('remind-me-btn');
+        this.locatePollsBtn = document.getElementById('locate-polls-btn');
 
         // Dynamic Text Elements
         this.domDisplayCountry = document.getElementById('display-country-name');
@@ -123,6 +124,17 @@ class VoterManager {
                 if (this.selectedCountry) {
                     const link = this.getGoogleCalendarLink(this.selectedCountry);
                     window.open(link, '_blank', 'noopener,noreferrer');
+                }
+            });
+        }
+        
+        // Google Maps Deep-Linking
+        if (this.locatePollsBtn) {
+            this.locatePollsBtn.addEventListener('click', () => {
+                if (this.selectedCountry) {
+                    const countryName = ELECTION_DATA[this.selectedCountry]?.name || this.selectedCountry;
+                    const mapsQuery = encodeURIComponent(`Polling Stations near ${countryName}`);
+                    window.open(`https://www.google.com/maps/search/${mapsQuery}`, '_blank', 'noopener,noreferrer');
                 }
             });
         }

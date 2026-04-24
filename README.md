@@ -10,7 +10,11 @@ CivicFlow is built around a standard **Finite State Machine (FSM)** pattern for 
 ## Features
 - **Zero-Dependency Architcture:** Pure vanilla integration shielding against downstream NPM deprecations.
 - **Dynamic Voter Journey:** Stateful machine managing progression seamlessly.
-- **Google Integrations:** Parameter-driven URL rendering targets localized 2026 polling milestones.
+
+## Google Services Integration
+- **Google Translate API:** Web element deployed globally across the application for immediate multi-language accessibility.
+- **Google Calendar API:** Parameter-driven URL rendering targeting localized 2026 polling milestones dynamically.
+- **Google Maps Deep-Linking:** Real-time spatial query routing to surface active polling stations specific to user locales.
 
 ## Assumptions
 - **2026 Data Cycles:** Datasets configured assume the parameters for known 2026 localized milestones (India, USA Midterms, Brazil General, UK Local) are locked. Any shifting election cycles will need a simple `ELECTION_DATA` object revision.
