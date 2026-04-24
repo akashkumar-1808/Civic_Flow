@@ -1,0 +1,66 @@
+/* Custom CSS for CivicFlow */
+
+/* Custom Scrollbar for modern look */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Glassmorphism Utilities */
+.glass-header {
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-card {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Base fade animations applied by vanilla JS */
+.journey-state {
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    position: absolute; /* Stack over each other natively */
+    top: 2rem;
+    left: 2rem;
+    right: 2rem;
+}
+
+.journey-state.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: relative; /* Allow flow Layout */
+    top: auto;
+    left: auto;
+    right: auto;
+}
+
+.journey-state.hidden {
+    display: none;
+}
+
+/* Map Placeholder Grid Background */
+.map-grid {
+    background-size: 20px 20px;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
