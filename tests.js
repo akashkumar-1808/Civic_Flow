@@ -20,5 +20,5 @@ const finalVerification = () => {
     console.groupEnd();
 };
 
-// Start looking for the app hook immediately
-finalVerification();
+// Start looking for the app hook after 4 seconds to avoid Firebase noise
+setTimeout(finalVerification, 4000);
