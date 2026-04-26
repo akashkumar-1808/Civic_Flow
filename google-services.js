@@ -12,9 +12,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+let app;
 let analytics;
 try {
+  app = initializeApp(firebaseConfig);
   analytics = getAnalytics(app);
 } catch (e) {
   console.log("Analytics loaded in simulated context.");

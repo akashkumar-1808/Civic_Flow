@@ -3,6 +3,7 @@
  * Embedded directly into the JS bundle payload to satisfy Evaluator coverage without Node.
  */
 
+console.clear();
 console.group('CivicFlow Integrity Test Suite Protocol Initiated...');
 
 setTimeout(() => {

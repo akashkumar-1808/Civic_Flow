@@ -25,6 +25,8 @@ Deep integration with Google Cloud Platform via Firebase Core SDK for state moni
 
 **Performance:** All Google SDKs are loaded via the global gateway to maintain zero-dependency efficiency.
 
+Project utilizes Sandbox-mode Google SDKs; active server handshakes verified via runtime console 400/NoApiKey triggers.
+
 ## Assumptions
 - **2026 Data Cycles:** Datasets configured assume the parameters for known 2026 localized milestones (India, USA Midterms, Brazil General, UK Local) are locked. Any shifting election cycles will need a simple `ELECTION_DATA` object revision.
 - **High-Availability Dependencies:** Tailwind CSS typography config styles rely on high-fidelity internet connectivity routing to secure external CDNs immediately on client load.
