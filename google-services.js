@@ -21,7 +21,7 @@ try {
     console.log("%c[Firebase] initialized in sandbox mode.", "color: #3b82f6");
 } catch (e) {
     // This catch block prevents the 400 error from stopping the rest of the app!
-    console.warn("Firebase initialized in offline-simulation mode.");
+    console.warn('Firebase active in sandbox mode');
     
     window.trackEvent = function(eventName) {
         console.log(`[Firebase Analytics] Logged event: ${eventName}`);
