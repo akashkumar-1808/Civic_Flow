@@ -122,7 +122,7 @@ class VoterManager {
         
         this.finishBtn.addEventListener('click', () => {
             this.announce("Voter journey complete. Resetting.");
-            this.resetFlow();
+            this.resetApp();
         });
 
         // Backward Progression
@@ -135,7 +135,7 @@ class VoterManager {
 
         // Reset App flow
         if (this.resetBtn) {
-            this.resetBtn.addEventListener('click', () => this.resetFlow());
+            this.resetBtn.addEventListener('click', () => this.resetApp());
         }
 
         // Google Calendar API Simulation
@@ -186,19 +186,10 @@ class VoterManager {
     /**
      * Resets LocalStorage and returns to the initial state safely.
      */
-    resetFlow() {
-        try {
-            localStorage.removeItem('civicFlow_state');
-            localStorage.removeItem('civicFlow_country');
-        } catch (err) {
-            console.warn("CivicFlow Warning: Failed to clear session cache during manual reset.");
-        }
-        
-        this.selectedCountry = '';
-        this.countrySelect.value = '';
-        this.continueEligibilityBtn.disabled = true;
-        this.transitionTo('selection');
-        this.announce("Application reset to beginning.");
+    resetApp() {
+        localStorage.removeItem('civicFlow_state');
+        localStorage.removeItem('civicFlow_country');
+        window.location.reload(); // This forces the page to refresh to the start
     }
 
     /**
