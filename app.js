@@ -318,7 +318,5 @@ class VoterManager {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const manager = new VoterManager();
-    window.civicApp = manager;
-});
+const manager = new VoterManager();
+window.civicApp = manager;

@@ -37,4 +37,4 @@ setTimeout(() => {
     } finally {
         console.groupEnd();
     }
-}, 1500);
+}, 3000);
