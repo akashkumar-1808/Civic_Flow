@@ -37,6 +37,7 @@ const ELECTION_DATA = {
 
 class VoterManager {
     constructor() {
+        window.civicApp = this;
         this.initFirebase();
         // App states mapping to percentage completion and DOM node IDs
         this.states = {
@@ -310,5 +311,3 @@ class VoterManager {
 }
 
 const manager = new VoterManager();
-window.civicApp = manager; // 'manager' must match your class instance name
-console.log("CivicFlow: Application Instance Bound to Window.");
