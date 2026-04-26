@@ -310,4 +310,5 @@ class VoterManager {
 }
 
 const manager = new VoterManager();
-window.civicApp = manager;
+window.civicApp = manager; // 'manager' must match your class instance name
+console.log("CivicFlow: Application Instance Bound to Window.");
